@@ -6,8 +6,32 @@
 
 import { readFile } from 'node:fs/promises';
 import { homedir } from 'node:os';
-import { ProviderManager, Config, AuthType } from '@vybestack/llxprt-code-core';
+import {
+  ProviderManager,
+  Config,
+  AuthType,
+  sanitizeForByteString,
+  needsSanitization,
+} from '@vybestack/llxprt-code-core';
 import { LoadedSettings, SettingScope } from '../config/settings.js';
+
+/**
+ * Sanitizes API keys to remove problematic characters that cause ByteString errors.
+ * This handles cases where API key files have encoding issues or contain
+ * Unicode replacement characters (U+FFFD).
+ */
+function sanitizeApiKey(key: string): string {
+  const sanitized = sanitizeForByteString(key);
+
+  if (needsSanitization(key)) {
+    console.warn(
+      '[ProviderConfig] API key contained non-ASCII or control characters that were removed. ' +
+        'Please check your API key file encoding (should be UTF-8 without BOM).',
+    );
+  }
+
+  return sanitized;
+}
 
 export interface ProviderConfigResult {
   success: boolean;
@@ -71,13 +95,14 @@ export async function setProviderApiKey(
       }
     }
 
-    // Update the provider's API key
+    // Update the provider's API key (sanitized)
     if (activeProvider.setApiKey) {
-      activeProvider.setApiKey(apiKey);
+      const sanitizedKey = sanitizeApiKey(apiKey);
+      activeProvider.setApiKey(sanitizedKey);
 
-      // Save to settings
+      // Save to settings (sanitized)
       const currentKeys = settings.merged.providerApiKeys || {};
-      currentKeys[providerName] = apiKey;
+      currentKeys[providerName] = sanitizedKey;
       settings.setValue(SettingScope.User, 'providerApiKeys', currentKeys);
 
       // If this is the Gemini provider, we need to refresh auth to use API key mode
