@@ -13,9 +13,6 @@ coverage/
 .vscode/
 .idea/
 
-# GitHub workflows (YAML with complex multi-line strings)
-.github/
-
 # Project planning documents
 project-plans/
 

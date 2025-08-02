@@ -6,6 +6,9 @@
 
 import { describe, it, expect, beforeEach } from 'vitest';
 import { SecureInputHandler } from './secureInputHandler';
+import * as os from 'os';
+import * as path from 'path';
+import { writeFileSync } from 'fs';
 
 describe('SecureInputHandler', () => {
   let handler: SecureInputHandler;
@@ -284,8 +287,6 @@ describe('SecureInputHandler', () => {
       const multiCRResult = handler.processInput(withMultipleCR);
 
       // Write debug output to a file
-      // eslint-disable-next-line @typescript-eslint/no-require-imports, no-restricted-syntax
-      const fs = require('fs');
       const debugOutput = JSON.stringify(
         {
           afterTyping: debug1,
@@ -300,7 +301,9 @@ describe('SecureInputHandler', () => {
         null,
         2,
       );
-      fs.writeFileSync('/tmp/cr-debug.json', debugOutput);
+      // Use os.tmpdir() for cross-platform temp directory
+      const tmpPath = path.join(os.tmpdir(), 'cr-debug.json');
+      writeFileSync(tmpPath, debugOutput);
 
       // Expectations
       expect(result1).toBe('/key ');
