@@ -270,15 +270,12 @@ export const StatsDisplay: React.FC<StatsDisplayProps> = ({
         />
       )}
 
+      <Box height={1} />
+
       <Section title="Total Token Usage">
         <StatRow title="Total Tokens:">
           <Text color={Colors.Foreground}>
             {computed.totalTokens.toLocaleString()}
-          </Text>
-        </StatRow>
-        <StatRow title="Total Bytes:">
-          <Text color={Colors.Foreground}>
-            {(computed.totalTokens * 4).toLocaleString()}
           </Text>
         </StatRow>
       </Section>
