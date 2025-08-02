@@ -9,6 +9,7 @@ import {
   ComputedSessionStats,
   ModelMetrics,
 } from '../contexts/SessionContext.js';
+import { countTokens } from './tokenCounter.js';
 
 export function calculateErrorRate(metrics: ModelMetrics): number {
   if (metrics.api.totalRequests === 0) {
@@ -50,12 +51,12 @@ export const computeSessionStats = (
     (acc, model) => acc + model.tokens.cached,
     0,
   );
-  const totalPromptTokens = Object.values(models).reduce(
-    (acc, model) => acc + model.tokens.prompt,
+  const totalPromptTokens = Object.entries(models).reduce(
+    (acc, [name, model]) => acc + countTokens(name, String(model.tokens.prompt)),
     0,
   );
-  const totalCandidateTokens = Object.values(models).reduce(
-    (acc, model) => acc + model.tokens.candidates,
+  const totalCandidateTokens = Object.entries(models).reduce(
+    (acc, [name, model]) => acc + countTokens(name, String(model.tokens.candidates)),
     0,
   );
 
