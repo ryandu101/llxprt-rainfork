@@ -1,5 +1,5 @@
 {
-  "name": "@vybestack/llxprt-code",
+  "name": "rainfork",
   "version": "0.1.15",
   "engines": {
     "node": ">=24"
@@ -50,7 +50,7 @@
     "clean": "node scripts/clean.js"
   },
   "bin": {
-    "llxprt": "bundle/llxprt.js"
+    "rainfork": "bundle/llxprt.js"
   },
   "files": [
     "bundle/",
