@@ -269,6 +269,16 @@ export const StatsDisplay: React.FC<StatsDisplayProps> = ({
           cacheEfficiency={computed.cacheEfficiency}
         />
       )}
+
+      <Box height={1} />
+
+      <Section title="Total Token Usage">
+        <StatRow title="Total Tokens:">
+          <Text color={Colors.Foreground}>
+            {computed.totalTokens.toLocaleString()}
+          </Text>
+        </StatRow>
+      </Section>
     </Box>
   );
 };
