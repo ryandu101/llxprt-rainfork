@@ -54,6 +54,13 @@ export const computeSessionStats = (
     (acc, model) => acc + model.tokens.prompt,
     0,
   );
+  const totalCandidateTokens = Object.values(models).reduce(
+    (acc, model) => acc + model.tokens.candidates,
+    0,
+  );
+
+  const totalTokens = totalPromptTokens + totalCandidateTokens;
+
   const cacheEfficiency =
     totalPromptTokens > 0 ? (totalCachedTokens / totalPromptTokens) * 100 : 0;
 
@@ -80,5 +87,7 @@ export const computeSessionStats = (
     agreementRate,
     totalCachedTokens,
     totalPromptTokens,
+    totalCandidateTokens,
+    totalTokens,
   };
 };
