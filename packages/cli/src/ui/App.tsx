@@ -78,6 +78,7 @@ import {
   SessionStatsProvider,
   useSessionStats,
 } from './contexts/SessionContext.js';
+import { computeSessionStats } from './utils/computeStats.js';
 import { useGitBranchName } from './hooks/useGitBranchName.js';
 import { useFocus } from './hooks/useFocus.js';
 import { useBracketedPaste } from './hooks/useBracketedPaste.js';

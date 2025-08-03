@@ -20,6 +20,8 @@ import { getProviderManager } from '../../providers/providerManagerInstance.js';
 
 import { DebugProfiler } from './DebugProfiler.js';
 
+import { TokenBurn } from './TokenBurn.js';
+
 interface FooterProps {
   model: string;
   targetDir: string;
@@ -30,6 +32,7 @@ interface FooterProps {
   showErrorDetails: boolean;
   showMemoryUsage?: boolean;
   promptTokenCount: number;
+  totalTokens: number; // Add this line
   isPaidMode?: boolean;
   nightly: boolean;
   vimMode?: string;
@@ -45,6 +48,7 @@ export const Footer: React.FC<FooterProps> = ({
   showErrorDetails,
   showMemoryUsage,
   promptTokenCount,
+  totalTokens, // Add this line
   isPaidMode,
   nightly,
   vimMode,
@@ -140,6 +144,7 @@ export const Footer: React.FC<FooterProps> = ({
           </Box>
         )}
         {showMemoryUsage && <MemoryUsageDisplay />}
+        <TokenBurn totalTokens={totalTokens} />
       </Box>
     </Box>
   );

@@ -272,13 +272,26 @@ export const StatsDisplay: React.FC<StatsDisplayProps> = ({
 
       <Box height={1} />
 
-      <Section title="Total Token Usage">
-        <StatRow title="Total Tokens:">
-          <Text color={Colors.Foreground}>
-            {computed.totalTokens.toLocaleString()}
-          </Text>
-        </StatRow>
-      </Section>
+      <TokenBurn totalTokens={computed.totalTokens} />
+    </Box>
+  );
+};
+
+const TokenBurn: React.FC<{ totalTokens: number }> = ({ totalTokens }) => {
+  return (
+    <Box
+      flexDirection="column"
+      alignItems="center"
+      justifyContent="center"
+      width="100%"
+    >
+      <Text>
+        <Text color={Colors.Foreground}>Token Burn:🔥</Text>
+        <Text color={Colors.AccentRed} bold>
+          {totalTokens.toLocaleString()}
+        </Text>
+        <Text color={Colors.Foreground}>🔥</Text>
+      </Text>
     </Box>
   );
 };
