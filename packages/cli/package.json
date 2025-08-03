@@ -1,5 +1,5 @@
 {
-  "name": "@vybestack/llxprt-code",
+  "name": "rainfork",
   "version": "0.1.15",
   "description": "LLxprt Code",
   "repository": {
@@ -10,7 +10,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
-    "llxprt": "dist/index.js"
+    "rainfork": "dist/index.js"
   },
   "scripts": {
     "build": "node ../../scripts/build_package.js",
